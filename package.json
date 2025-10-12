@@ -1,0 +1,23 @@
+{
+  "name": "gamelog-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@prisma/client": "^6.17.1",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.7.2",
+    "prisma": "^6.17.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
