@@ -1,0 +1,44 @@
+import type { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+
+const prisma = new PrismaClient();
+
+export class CreateUserController {
+  async handle(request: Request, response: Response) {
+    try {
+      const { name, email, password } = request.body;
+
+      const existingUser = await prisma.user.findFirst({
+        where: {
+          OR: [{ email }, { name }],
+         },
+      });
+
+      if (existingUser) {
+        if (existingUser.email === email) {
+          return response.status(409).json({ error: 'This email is already in use.'})
+        }
+        if (existingUser.name === name) {
+          return response.status(409).json({ error: 'This username is already taken'})
+        }
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const user = await prisma.user.create({
+        data: {
+          name,
+          email,
+          password: hashedPassword,
+        },
+      });
+
+      const { password: _, ...userWithoutPassword } = user;
+
+      return response.status(201).json(userWithoutPassword);
+    } catch (error) {
+      return response.status(500).json({ error: 'Internal server error.' });
+    }
+  }
+}
