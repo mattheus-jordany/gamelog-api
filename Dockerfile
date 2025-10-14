@@ -5,5 +5,4 @@ RUN npm install
 COPY . .
 RUN npx prisma generate
 EXPOSE 3333
-# CMD ["npm", "run", "dev"]
-CMD ["tail", "-f", "/dev/null"]
+CMD ["npm", "run", "dev"]
