@@ -1,0 +1,13 @@
+# Ignora a pasta de dependências do Node
+node_modules
+
+# Ignora a pasta de configuração do Git
+.git
+
+# Ignora arquivos de ambiente (eles são injetados, não copiados)
+.env
+
+# Ignora os próprios arquivos do Docker e de documentação
+Dockerfile
+docker-compose.yml
+README.md
