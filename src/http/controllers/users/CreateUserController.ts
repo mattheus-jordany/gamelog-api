@@ -38,6 +38,7 @@ export class CreateUserController {
 
       return response.status(201).json(userWithoutPassword);
     } catch (error) {
+      console.error(error);
       return response.status(500).json({ error: 'Internal server error.' });
     }
   }
