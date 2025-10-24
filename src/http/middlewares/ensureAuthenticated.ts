@@ -11,7 +11,6 @@ export function ensureAuthenticated(
   response: Response,
   next: NextFunction
 ) {
-  console.log('MIDDLEWARE: Executando ensureAuthenticated...');
   const authToken = request.headers.authorization;
 
   if (!authToken) {
