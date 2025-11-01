@@ -1,4 +1,3 @@
-// src/http/routes/auth.routes.ts
 import { Router } from 'express';
 import { AuthenticateUserController } from '../controllers/users/AuthenticateUserController.js';
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated.js';

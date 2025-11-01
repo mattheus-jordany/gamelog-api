@@ -1,23 +1,32 @@
-# Entrega Semanas 1-2: GameLog API
+# Entrega Semana 3: GameLog API
 
-Este documento registra o progresso do projeto GameLog API até a data de entrega referente às semanas 1 e 2 do desafio de back-end.
+Este documento registra o progresso do projeto GameLog API até a data de entrega referente à Semana 3 (Login e recuperação de senha).
 
-## Funcionalidades Implementadas (Até esta data)
+Esta branch foi criada a partir da `develop` e inclui todo o trabalho das entregas anteriores (Semanas 1-2).
 
-* **Ambiente:** Projeto totalmente conteinerizado com Docker e Docker Compose, utilizando Node.js v18 e TypeScript. Ambiente configurado para desenvolvimento com reinício automático (`nodemon` + `tsc`). Variáveis de ambiente gerenciadas com `.env` e `.env.example`.
-* **Banco de Dados:** Modelagem inicial do banco de dados PostgreSQL utilizando Prisma ORM. Migrations criadas e aplicadas para definir as tabelas `User`, `Game` e `UserGameLog` com seus relacionamentos e campos iniciais (incluindo `enums` para `Role`, `RecommendationStatus`, `GameStatus`, campos opcionais e constraints `@unique`). Instância única do Prisma Client implementada (`Singleton`).
-* **Autenticação (Parcial):**
-    * Endpoint `POST /users` para cadastro de novos usuários com hashing de senha (`bcryptjs`) e validação de email/nome únicos.
-    * Endpoint `POST /users/sessions` para login, comparando senhas com `bcryptjs` e gerando tokens JWT.
-* **Autorização (Middlewares):**
-    * Middleware `ensureAuthenticated` implementado para validar tokens JWT.
-    * Middleware `ensureAdmin` implementado para verificar a role do usuário.
-    * Rota de teste `GET /users/profile` (protegida por `ensureAuthenticated`).
-    * Rota de teste `GET /users` (protegida por `ensureAuthenticated` e `ensureAdmin`).
+## Funcionalidades Concluídas (Até esta data)
 
-## Experiência e Desafios
-
-Durante estas primeiras semanas, o maior desafio foi a configuração inicial do ambiente Docker com Node.js/TypeScript e ES Modules, o que exigiu depuração detalhada de erros de inicialização e sincronização de arquivos no Windows/WSL. A persistência em resolver esses problemas resultou em um ambiente de desenvolvimento estável e robusto. A modelagem do banco com Prisma foi uma experiência positiva, e a implementação da autenticação com JWT e bcrypt seguiu as melhores práticas de segurança. O projeto está adiantado em relação ao cronograma inicial.
+* **Ambiente:** Projeto 100% conteinerizado com Docker, usando Node.js/TypeScript e um fluxo de build (`tsc` + `nodemon`).
+* **Banco de Dados:** Modelagem no Prisma completa, com migrações aplicadas.
+* **Autenticação:**
+    * Endpoint `POST /users` (cadastro) funcional.
+    * Endpoint `POST /auth/sessions` (login) funcional.
+* **Autorização:**
+    * Middlewares `ensureAuthenticated` e `ensureAdmin` funcionais e testados.
+* **CRUD (Parcial):**
+    * `POST /games` (para admins) e `GET /games` (listagem pública) implementados.
+* **Recuperação de Senha (Nova Funcionalidade):**
+    * O schema do banco foi atualizado para suportar tokens de reset.
+    * As rotas de autenticação foram refatoradas para `/auth`.
+    * Endpoint **`POST /auth/forgot-password`** implementado:
+        * Valida o e-mail.
+        * Gera um token de reset seguro (`crypto`) com expiração de 1 hora.
+        * Salva o token e a expiração no banco.
+        * *Simula* o envio de e-mail (imprimindo o token no console).
+    * Endpoint **`POST /auth/reset-password`** implementado:
+        * Valida o token, a confirmação de senha e a expiração do token.
+        * Atualiza a senha do usuário com `bcrypt`.
+        * Limpa o token do banco para evitar reuso.
 
 ---
-*Este README é específico para a branch `entrega/semanas-1-2`.*
+*Este README é específico para a branch `entrega/semana-3`.*
