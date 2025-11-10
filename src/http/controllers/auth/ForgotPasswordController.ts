@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
 import crypto from 'crypto';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
