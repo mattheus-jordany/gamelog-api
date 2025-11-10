@@ -11,10 +11,8 @@ const createUserController = new CreateUserController();
 const authenticateUserController = new AuthenticateUserController();
 const listUsersController = new ListUsersController();
 
-// Rotas públicas
 usersRoutes.post('/', createUserController.handle);
 
-// Rota protegida para admins
 usersRoutes.get('/', ensureAuthenticated, ensureAdmin, listUsersController.handle);
 
 export { usersRoutes };
