@@ -9,6 +9,20 @@ export class CreateUserController {
     try {
       const { name, email, password } = request.body;
 
+      if (!password) {
+        return response.status(400).json({ error: 'Password is required.' });
+      }
+
+      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+      if (!passwordRegex.test(password)) {
+        return response.status(400).json({ 
+          code: 'password.weak',
+          error: 'Password is too weak.',
+          details: 'Password must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.' 
+        });
+      }
+
       const existingUser = await prisma.user.findFirst({
         where: {
           OR: [{ email }, { name }],
