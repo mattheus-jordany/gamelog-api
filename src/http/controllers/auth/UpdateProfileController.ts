@@ -10,6 +10,34 @@ export class UpdateProfileController {
 
       const { name, avatarUrl } = request.body;
 
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+      });
+
+      if (!user) {
+        return response.status(404).json({ error: 'User not found.' });
+      }
+
+      if (name && name !== user.name) {
+        if (user.nameChangeLockedUntil && user.nameChangeLockedUntil > new Date()) {
+          return response.status(403).json({
+            error: 'You are currently blocked from changing your name.',
+            lockExpiresAt: user.nameChangeLockedUntil,
+          });
+        }
+
+        const nameAlreadyTaken = await prisma.user.findFirst({
+          where: {
+            name: name,
+            id: { not: userId }, 
+          },
+        });
+
+        if (nameAlreadyTaken) {
+          return response.status(409).json({ error: 'This username is already taken.' });
+        }
+      }
+      
       if (name) {
         const nameAlreadyTaken = await prisma.user.findFirst({
           where: {
