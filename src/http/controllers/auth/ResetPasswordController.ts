@@ -13,6 +13,19 @@ export class ResetPasswordController {
         return response.status(400).json({ error: 'Passwords do not match.' });
       }
 
+      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+      if (!passwordRegex.test(password)) {
+        return response.status(400).json({ 
+          error: 'Password is too weak.',
+          details: 'Password must be at least 8 characters long and contain one uppercase letter, one lowercase letter, and one number.' 
+        });
+      }
+
+      if (password !== password_confirmation) {
+        return response.status(400).json({ error: 'Passwords do not match.' });
+      }
+
       const user = await prisma.user.findFirst({
         where: {
           passwordResetToken: token,
