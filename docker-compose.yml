@@ -9,6 +9,9 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - JWT_SECRET=${JWT_SECRET}
       - PORT=${PORT}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME} 
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY} 
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
   db:
     image: postgres:14-alpine
     container_name: gamelog_db
