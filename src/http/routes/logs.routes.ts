@@ -52,20 +52,24 @@ const deleteUserGameLogController = new DeleteUserGameLogController();
  *               comment:
  *                 type: string
  *                 maxLength: 300
-	*           examples:
-	*             createLogExample:
-	*               $ref: '#/components/examples/createLogExample'
-	*     responses:
-	*       201:
-	*         description: Registro criado com sucesso
-	*       400:
-	*         description: Requisição inválida — dados ausentes ou inválidos
-	*       404:
-	*         description: Jogo não encontrado no catálogo
-	*       409:
-	*         description: Jogo já está no log do usuário
-	*       500:
-	*         description: Erro interno do servidor
+ *           examples:
+ *             createLogExample:
+ *               $ref: '#/components/examples/createLogExample'
+ *     responses:
+ *       201:
+ *         description: Registro criado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserGameLog'
+ *       400:
+ *         description: Requisição inválida — dados ausentes ou inválidos
+ *       404:
+ *         description: Jogo não encontrado no catálogo
+ *       409:
+ *         description: Jogo já está no log do usuário
+ *       500:
+ *         description: Erro interno do servidor
  */
 logsRoutes.post('/', ensureAuthenticated, createUserGameLogController.handle);
 
@@ -79,12 +83,23 @@ logsRoutes.post('/', ensureAuthenticated, createUserGameLogController.handle);
  *     security:
  *       - bearerAuth: []
  *     responses:
-	*       200:
-	*         description: Logs retornados com sucesso
-	*       401:
-	*         description: Não autenticado
-	*       500:
-	*         description: Erro interno do servidor
+ *       200:
+ *         description: Logs retornados com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/UserGameLog'
+ *                 meta:
+ *                   type: object
+ *       401:
+ *         description: Não autenticado
+ *       500:
+ *         description: Erro interno do servidor
  */
 logsRoutes.get('/my', ensureAuthenticated, listUserGameLogsController.handle);
 
@@ -122,20 +137,24 @@ logsRoutes.get('/my', ensureAuthenticated, listUserGameLogsController.handle);
  *                 type: number
  *               isPlatininated:
  *                 type: boolean
-	*           examples:
-	*             updateLogExample:
-	*               $ref: '#/components/examples/updateLogExample'
-	*     responses:
-	*       200:
-	*         description: Registro atualizado com sucesso
-	*       400:
-	*         description: Requisição inválida — Log ID inválido ou dados inválidos
-	*       401:
-	*         description: Não autenticado
-	*       404:
-	*         description: Registro de log não encontrado ou usuário não autorizado
-	*       500:
-	*         description: Erro interno do servidor
+ *           examples:
+ *             updateLogExample:
+ *               $ref: '#/components/examples/updateLogExample'
+ *     responses:
+ *       200:
+ *         description: Registro atualizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserGameLog'
+ *       400:
+ *         description: Requisição inválida — Log ID inválido ou dados inválidos
+ *       401:
+ *         description: Não autenticado
+ *       404:
+ *         description: Registro de log não encontrado ou usuário não autorizado
+ *       500:
+ *         description: Erro interno do servidor
  */
 logsRoutes.put('/:id', ensureAuthenticated, updateUserGameLogController.handle);
 

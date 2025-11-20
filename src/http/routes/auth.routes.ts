@@ -54,6 +54,10 @@ const uploadAvatarController = new UploadAvatarController();
  *     responses:
  *       200:
  *         description: Autenticado com sucesso — token retornado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/AuthToken'
  *       400:
  *         description: Requisição inválida — campos obrigatórios faltando
  *       401:
@@ -74,11 +78,15 @@ authRoutes.post('/sessions', authenticateUserController.handle);
  *       - bearerAuth: []
  *     responses:
  *       200:
-  *         description: Dados do perfil retornados com sucesso
-  *       401:
-  *         description: Não autenticado
-  *       500:
-  *         description: Erro interno do servidor
+ *         description: Dados do perfil retornados com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Não autenticado
+ *       500:
+ *         description: Erro interno do servidor
  */
 authRoutes.get('/profile', ensureAuthenticated, (request, response) => {
   return response.json({ message: `Bem-vindo, usuário com ID: ${request.user.id}` });
@@ -108,9 +116,13 @@ authRoutes.get('/profile', ensureAuthenticated, (request, response) => {
  *           examples:
  *             updateProfileExample:
  *               $ref: '#/components/examples/updateProfileExample'
-  *     responses:
-  *       200:
-  *         description: Perfil atualizado com sucesso
+ *     responses:
+ *       200:
+ *         description: Perfil atualizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
   *       400:
   *         description: Requisição inválida
   *       403:
@@ -147,9 +159,13 @@ authRoutes.put('/profile', ensureAuthenticated, updateProfileController.handle);
    *           examples:
    *             forgotPasswordExample:
    *               $ref: '#/components/examples/forgotPasswordExample'
-  *     responses:
-  *       200:
-  *         description: Instruções de recuperação enviadas (mesmo se o email não existir)
+ *     responses:
+ *       200:
+ *         description: Instruções de recuperação enviadas (mesmo se o email não existir)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GenericMessage'
   *       500:
   *         description: Erro interno do servidor
  */
@@ -185,9 +201,13 @@ authRoutes.post('/forgot-password', forgotPasswordController.handle);
    *           examples:
    *             resetPasswordExample:
    *               $ref: '#/components/examples/resetPasswordExample'
-  *     responses:
-  *       200:
-  *         description: Senha redefinida com sucesso
+ *     responses:
+ *       200:
+ *         description: Senha redefinida com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GenericMessage'
   *       400:
   *         description: Requisição inválida — tokens ausentes, senhas não conferem ou senha fraca
   *       404:
@@ -207,8 +227,8 @@ authRoutes.post('/reset-password', resetPasswordController.handle);
  *     security:
  *       - bearerAuth: []
  *     responses:
-  *       204:
-  *         description: Conta deletada com sucesso (sem conteúdo)
+ *       204:
+ *         description: Conta deletada com sucesso (sem conteúdo)
   *       401:
   *         description: Não autenticado
   *       500:

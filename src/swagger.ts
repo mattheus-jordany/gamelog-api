@@ -71,6 +71,18 @@ const options = {
             playtimeHours: { type: 'number' },
           },
         },
+        AuthToken: {
+          type: 'object',
+          properties: {
+            token: { type: 'string' },
+          },
+        },
+        GenericMessage: {
+          type: 'object',
+          properties: {
+            message: { type: 'string' },
+          },
+        },
       },
       examples: {
         loginExample: {

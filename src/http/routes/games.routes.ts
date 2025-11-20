@@ -61,6 +61,10 @@ const uploadGameCoverController = new UploadGameCoverController();
  *     responses:
  *       201:
  *         description: Sucesso (jogo criado)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
  *       400:
  *         description: Requisição inválida — campos inválidos ou ausentes
  *       401:
@@ -91,6 +95,17 @@ const uploadGameCoverController = new UploadGameCoverController();
  *     responses:
  *       200:
  *         description: Lista de jogos retornada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Game'
+ *                 meta:
+ *                   type: object
  *       500:
  *         description: Erro interno do servidor
  */
@@ -115,6 +130,10 @@ gamesRoutes.get('/', listGamesController.handle);
  *     responses:
  *       200:
  *         description: Jogo retornado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
  *       400:
  *         description: ID do jogo não enviado ou inválido
  *       404:
@@ -165,6 +184,10 @@ gamesRoutes.get('/:id', getGameByIdController.handle);
  *     responses:
  *       200:
  *         description: Jogo atualizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
  *       400:
  *         description: Requisição inválida — ID ou dados inválidos
  *       403:
@@ -238,6 +261,10 @@ gamesRoutes.delete('/:id', ensureAuthenticated, ensureAdmin, deleteGameControlle
  *     responses:
  *       200:
  *         description: Capa atualizada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
  *       400:
  *         description: Nenhum arquivo enviado ou Game ID inválido/inexistente
  *       403:

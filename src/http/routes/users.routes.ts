@@ -54,6 +54,10 @@ const unblockUserNameController = new UnblockUserNameController();
  *     responses:
  *       201:
  *         description: Usuário criado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  *       400:
  *         description: Requisição inválida — senha é obrigatória e deve atender aos critérios de segurança
  *       409:
@@ -82,6 +86,17 @@ const unblockUserNameController = new UnblockUserNameController();
  *     responses:
  *       200:
  *         description: Lista de usuários retornada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/User'
+ *                 meta:
+ *                   type: object
  *       403:
  *         description: Acesso negado — apenas administradores
  *       500:
@@ -139,6 +154,10 @@ usersRoutes.delete('/:id', ensureAuthenticated, ensureAdmin, deleteUserControlle
  *     responses:
  *       200:
  *         description: Nome moderado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  *       400:
  *         description: Requisição inválida — ID do usuário está faltando ou inválido
  *       403:
@@ -169,6 +188,10 @@ usersRoutes.patch('/:id/moderate-name', ensureAuthenticated, ensureAdmin, modera
  *     responses:
  *       200:
  *         description: Nome desbloqueado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  *       400:
  *         description: Requisição inválida — ID do usuário está faltando ou inválido
  *       404:
