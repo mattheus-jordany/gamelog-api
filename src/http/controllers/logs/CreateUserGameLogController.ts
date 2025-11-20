@@ -1,5 +1,5 @@
-import type { Request, Response } from 'express';
-import { prisma } from '../../../prisma/client.js';
+import type { Request, Response } from "express";
+import { prisma } from "../../../prisma/client.js";
 
 export class CreateUserGameLogController {
   async handle(request: Request, response: Response) {
@@ -15,7 +15,7 @@ export class CreateUserGameLogController {
         isPlatininated,
         status,
         startedAt,
-        finishedAt
+        finishedAt,
       } = request.body;
 
       const gameExists = await prisma.game.findUnique({
@@ -23,7 +23,9 @@ export class CreateUserGameLogController {
       });
 
       if (!gameExists) {
-        return response.status(404).json({ error: 'Game not found in catalog.' });
+        return response
+          .status(404)
+          .json({ error: "Game not found in catalog." });
       }
 
       const logAlreadyExists = await prisma.userGameLog.findUnique({
@@ -31,12 +33,14 @@ export class CreateUserGameLogController {
           userId_gameId: {
             userId: userId,
             gameId: gameId,
-          }
-        }
+          },
+        },
       });
 
       if (logAlreadyExists) {
-        return response.status(409).json({ error: 'This game is already in your log.' });
+        return response
+          .status(409)
+          .json({ error: "This game is already in your log." });
       }
 
       const userGameLog = await prisma.userGameLog.create({
@@ -51,14 +55,13 @@ export class CreateUserGameLogController {
           status,
           startedAt: startedAt ? new Date(startedAt) : null, // Converte string de data se existir
           finishedAt: finishedAt ? new Date(finishedAt) : null,
-        }
+        },
       });
 
       return response.status(201).json(userGameLog);
-
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ error: 'Internal server error.' });
+      return response.status(500).json({ error: "Internal server error." });
     }
   }
 }

@@ -1,5 +1,5 @@
-import type { Request, Response } from 'express';
-import { prisma } from '../../../prisma/client.js';
+import type { Request, Response } from "express";
+import { prisma } from "../../../prisma/client.js";
 
 export class UpdateGameController {
   async handle(request: Request, response: Response) {
@@ -7,7 +7,7 @@ export class UpdateGameController {
       const { id } = request.params;
 
       if (!id) {
-        return response.status(400).json({ error: 'Game ID is missing.' });
+        return response.status(400).json({ error: "Game ID is missing." });
       }
 
       const { title, platform, genre, releaseYear, coverUrl } = request.body;
@@ -17,7 +17,7 @@ export class UpdateGameController {
       });
 
       if (!gameExists) {
-        return response.status(404).json({ error: 'Game not found.' });
+        return response.status(404).json({ error: "Game not found." });
       }
 
       const updatedGame = await prisma.game.update({
@@ -32,10 +32,9 @@ export class UpdateGameController {
       });
 
       return response.status(200).json(updatedGame);
-
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ error: 'Internal server error.' });
+      return response.status(500).json({ error: "Internal server error." });
     }
   }
 }

@@ -1,7 +1,7 @@
-import type { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import type { Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
@@ -15,13 +15,13 @@ export class AuthenticateUserController {
       });
 
       if (!user) {
-        return response.status(401).json({ error: 'Invalid credentials.' });
+        return response.status(401).json({ error: "Invalid credentials." });
       }
 
       const passwordMatch = await bcrypt.compare(password, user.password);
 
       if (!passwordMatch) {
-        return response.status(401).json({ error: 'Invalid credentials.' });
+        return response.status(401).json({ error: "Invalid credentials." });
       }
 
       const token = jwt.sign(
@@ -29,7 +29,7 @@ export class AuthenticateUserController {
         process.env.JWT_SECRET as string,
         {
           subject: user.id,
-          expiresIn: '1d',
+          expiresIn: "1d",
         }
       );
 
@@ -39,10 +39,9 @@ export class AuthenticateUserController {
         user: userWithoutPassword,
         token,
       });
-
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ error: 'Internal server error.' });
+      return response.status(500).json({ error: "Internal server error." });
     }
   }
 }

@@ -1,5 +1,5 @@
-import type { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import type { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
 const { verify } = jwt;
 
 interface IPayload {
@@ -14,12 +14,12 @@ export function ensureAuthenticated(
   const authToken = request.headers.authorization;
 
   if (!authToken) {
-    return response.status(401).json({ error: 'Token is missing.' });
+    return response.status(401).json({ error: "Token is missing." });
   }
 
-  const [, token] = authToken.split(' ');
+  const [, token] = authToken.split(" ");
   if (!token) {
-    return response.status(401).json({ error: 'Token malformatted.' });
+    return response.status(401).json({ error: "Token malformatted." });
   }
 
   const secret = process.env.JWT_SECRET;
@@ -32,6 +32,6 @@ export function ensureAuthenticated(
     request.user = { id: sub };
     return next();
   } catch (err) {
-    return response.status(401).json({ error: 'Invalid token.' });
+    return response.status(401).json({ error: "Invalid token." });
   }
 }

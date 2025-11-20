@@ -1,6 +1,6 @@
-import type { Request, Response } from 'express';
-import { prisma } from '../../../prisma/client.js';
-import { error } from 'console';
+import type { Request, Response } from "express";
+import { prisma } from "../../../prisma/client.js";
+import { error } from "console";
 
 export class UpdateUserGameLogController {
   async handle(request: Request, response: Response) {
@@ -8,9 +8,11 @@ export class UpdateUserGameLogController {
       const { id: userId } = request.user;
 
       const { id: logId } = request.params;
-    
-      if (!logId){
-        return response.status(400).json({ error: 'Log ID is missing from URL.' })
+
+      if (!logId) {
+        return response
+          .status(400)
+          .json({ error: "Log ID is missing from URL." });
       }
       const {
         rating,
@@ -20,7 +22,7 @@ export class UpdateUserGameLogController {
         isPlatininated,
         status,
         startedAt,
-        finishedAt
+        finishedAt,
       } = request.body;
 
       const updateResult = await prisma.userGameLog.updateMany({
@@ -37,22 +39,23 @@ export class UpdateUserGameLogController {
           status,
           startedAt: startedAt ? new Date(startedAt) : null,
           finishedAt: finishedAt ? new Date(finishedAt) : null,
-        }
+        },
       });
 
       if (updateResult.count === 0) {
-        return response.status(404).json({ error: 'Log not found or user not authorized.' });
+        return response
+          .status(404)
+          .json({ error: "Log not found or user not authorized." });
       }
 
       const updatedLog = await prisma.userGameLog.findUnique({
-        where: { id: logId }
+        where: { id: logId },
       });
 
       return response.status(200).json(updatedLog);
-
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ error: 'Internal server error.' });
+      return response.status(500).json({ error: "Internal server error." });
     }
   }
 }

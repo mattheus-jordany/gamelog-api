@@ -1,12 +1,12 @@
-import { Router } from 'express';
-import { CreateUserController } from '../controllers/users/CreateUserController.js';
-import { ListUsersController } from '../controllers/users/ListUsersController.js';
-import { DeleteUserController } from '../controllers/users/DeleteUserController.js';
-import { ModerateNameController } from '../controllers/users/ModerateNameController.js';
-import { UnblockUserNameController } from '../controllers/users/UnblockUserNameController.js';
+import { Router } from "express";
+import { CreateUserController } from "../controllers/users/CreateUserController.js";
+import { ListUsersController } from "../controllers/users/ListUsersController.js";
+import { DeleteUserController } from "../controllers/users/DeleteUserController.js";
+import { ModerateNameController } from "../controllers/users/ModerateNameController.js";
+import { UnblockUserNameController } from "../controllers/users/UnblockUserNameController.js";
 
-import { ensureAuthenticated } from '../middlewares/ensureAuthenticated.js';
-import { ensureAdmin } from '../middlewares/ensureAdmin.js';
+import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
+import { ensureAdmin } from "../middlewares/ensureAdmin.js";
 
 const usersRoutes = Router();
 
@@ -102,8 +102,13 @@ const unblockUserNameController = new UnblockUserNameController();
  *       500:
  *         description: Erro interno do servidor
  */
-usersRoutes.post('/', createUserController.handle);
-usersRoutes.get('/', ensureAuthenticated, ensureAdmin, listUsersController.handle);
+usersRoutes.post("/", createUserController.handle);
+usersRoutes.get(
+  "/",
+  ensureAuthenticated,
+  ensureAdmin,
+  listUsersController.handle
+);
 
 /**
  * @swagger
@@ -133,7 +138,12 @@ usersRoutes.get('/', ensureAuthenticated, ensureAdmin, listUsersController.handl
  *       500:
  *         description: Erro interno do servidor
  */
-usersRoutes.delete('/:id', ensureAuthenticated, ensureAdmin, deleteUserController.handle);
+usersRoutes.delete(
+  "/:id",
+  ensureAuthenticated,
+  ensureAdmin,
+  deleteUserController.handle
+);
 
 /**
  * @swagger
@@ -167,7 +177,12 @@ usersRoutes.delete('/:id', ensureAuthenticated, ensureAdmin, deleteUserControlle
  *       500:
  *         description: Erro interno do servidor
  */
-usersRoutes.patch('/:id/moderate-name', ensureAuthenticated, ensureAdmin, moderateNameController.handle);
+usersRoutes.patch(
+  "/:id/moderate-name",
+  ensureAuthenticated,
+  ensureAdmin,
+  moderateNameController.handle
+);
 
 /**
  * @swagger
@@ -199,6 +214,11 @@ usersRoutes.patch('/:id/moderate-name', ensureAuthenticated, ensureAdmin, modera
  *       500:
  *         description: Erro interno do servidor
  */
-usersRoutes.patch('/:id/unblock-name', ensureAuthenticated, ensureAdmin, unblockUserNameController.handle);
+usersRoutes.patch(
+  "/:id/unblock-name",
+  ensureAuthenticated,
+  ensureAdmin,
+  unblockUserNameController.handle
+);
 
 export { usersRoutes };

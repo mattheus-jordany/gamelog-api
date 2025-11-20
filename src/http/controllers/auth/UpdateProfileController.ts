@@ -1,5 +1,5 @@
-import type { Request, Response } from 'express';
-import { prisma } from '../../../prisma/client.js';
+import type { Request, Response } from "express";
+import { prisma } from "../../../prisma/client.js";
 
 export class UpdateProfileController {
   async handle(request: Request, response: Response) {
@@ -13,13 +13,16 @@ export class UpdateProfileController {
       });
 
       if (!user) {
-        return response.status(404).json({ error: 'User not found.' });
+        return response.status(404).json({ error: "User not found." });
       }
 
       if (name && name !== user.name) {
-        if (user.nameChangeLockedUntil && user.nameChangeLockedUntil > new Date()) {
+        if (
+          user.nameChangeLockedUntil &&
+          user.nameChangeLockedUntil > new Date()
+        ) {
           return response.status(403).json({
-            error: 'You are currently blocked from changing your name.',
+            error: "You are currently blocked from changing your name.",
             lockExpiresAt: user.nameChangeLockedUntil,
           });
         }
@@ -27,27 +30,31 @@ export class UpdateProfileController {
         const nameAlreadyTaken = await prisma.user.findFirst({
           where: {
             name: name,
-            id: { not: userId }, 
+            id: { not: userId },
           },
         });
 
         if (nameAlreadyTaken) {
-          return response.status(409).json({ error: 'This username is already taken.' });
+          return response
+            .status(409)
+            .json({ error: "This username is already taken." });
         }
       }
-      
+
       if (name) {
         const nameAlreadyTaken = await prisma.user.findFirst({
           where: {
             name: name,
             id: {
               not: userId,
-            }
-          }
+            },
+          },
         });
 
         if (nameAlreadyTaken) {
-          return response.status(409).json({ error: 'This username is already taken.' });
+          return response
+            .status(409)
+            .json({ error: "This username is already taken." });
         }
       }
 
@@ -58,16 +65,15 @@ export class UpdateProfileController {
         data: {
           name,
           avatarUrl,
-        }
+        },
       });
 
       const { password: _, ...userWithoutPassword } = updatedUser;
 
       return response.status(200).json(userWithoutPassword);
-
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ error: 'Internal server error.' });
+      return response.status(500).json({ error: "Internal server error." });
     }
   }
 }

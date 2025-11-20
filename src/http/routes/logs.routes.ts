@@ -1,9 +1,9 @@
-import { Router } from 'express';
-import { CreateUserGameLogController } from '../controllers/logs/CreateUserGameLogController.js';
-import { ListUserGameLogsController } from '../controllers/logs/ListUserGameLogsController.js';
-import { UpdateUserGameLogController } from '../controllers/logs/UpdateUserGameLogController.js';
-import { DeleteUserGameLogController } from '../controllers/logs/DeleteUserGameLogController.js';
-import { ensureAuthenticated } from '../middlewares/ensureAuthenticated.js';
+import { Router } from "express";
+import { CreateUserGameLogController } from "../controllers/logs/CreateUserGameLogController.js";
+import { ListUserGameLogsController } from "../controllers/logs/ListUserGameLogsController.js";
+import { UpdateUserGameLogController } from "../controllers/logs/UpdateUserGameLogController.js";
+import { DeleteUserGameLogController } from "../controllers/logs/DeleteUserGameLogController.js";
+import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
 
 const logsRoutes = Router();
 
@@ -71,7 +71,7 @@ const deleteUserGameLogController = new DeleteUserGameLogController();
  *       500:
  *         description: Erro interno do servidor
  */
-logsRoutes.post('/', ensureAuthenticated, createUserGameLogController.handle);
+logsRoutes.post("/", ensureAuthenticated, createUserGameLogController.handle);
 
 /**
  * @swagger
@@ -101,7 +101,7 @@ logsRoutes.post('/', ensureAuthenticated, createUserGameLogController.handle);
  *       500:
  *         description: Erro interno do servidor
  */
-logsRoutes.get('/my', ensureAuthenticated, listUserGameLogsController.handle);
+logsRoutes.get("/my", ensureAuthenticated, listUserGameLogsController.handle);
 
 /**
  * @swagger
@@ -156,7 +156,7 @@ logsRoutes.get('/my', ensureAuthenticated, listUserGameLogsController.handle);
  *       500:
  *         description: Erro interno do servidor
  */
-logsRoutes.put('/:id', ensureAuthenticated, updateUserGameLogController.handle);
+logsRoutes.put("/:id", ensureAuthenticated, updateUserGameLogController.handle);
 
 /**
  * @swagger
@@ -176,15 +176,19 @@ logsRoutes.put('/:id', ensureAuthenticated, updateUserGameLogController.handle);
  *           format: uuid
  *         description: ID do registro de log
  *     responses:
-	*       204:
-	*         description: Registro removido com sucesso (sem conteúdo)
-	*       401:
-	*         description: Não autenticado
-	*       404:
-	*         description: Registro de log não encontrado ou usuário não autorizado
-	*       500:
-	*         description: Erro interno do servidor
+ *       204:
+ *         description: Registro removido com sucesso (sem conteúdo)
+ *       401:
+ *         description: Não autenticado
+ *       404:
+ *         description: Registro de log não encontrado ou usuário não autorizado
+ *       500:
+ *         description: Erro interno do servidor
  */
-logsRoutes.delete('/:id', ensureAuthenticated, deleteUserGameLogController.handle);
+logsRoutes.delete(
+  "/:id",
+  ensureAuthenticated,
+  deleteUserGameLogController.handle
+);
 
 export { logsRoutes };
