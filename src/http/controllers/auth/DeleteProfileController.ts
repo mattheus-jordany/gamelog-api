@@ -1,5 +1,5 @@
-import type { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import type { Request, Response } from "express";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -15,10 +15,9 @@ export class DeleteProfileController {
       });
 
       return response.status(204).send();
-
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ error: 'Internal server error.' });
+      return response.status(500).json({ error: "Internal server error." });
     }
   }
 }

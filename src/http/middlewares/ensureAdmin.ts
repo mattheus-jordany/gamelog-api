@@ -1,7 +1,5 @@
-import type { Request, Response, NextFunction } from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import type { Request, Response, NextFunction } from "express";
+import { prisma } from "../../prisma/client.js";
 
 export async function ensureAdmin(
   request: Request,
@@ -14,8 +12,8 @@ export async function ensureAdmin(
     where: { id },
   });
 
-  if (user?.role !== 'ADMIN') {
-    return response.status(403).json({ error: 'User is not an admin.' });
+  if (user?.role !== "ADMIN") {
+    return response.status(403).json({ error: "User is not an admin." });
   }
 
   return next();

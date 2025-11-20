@@ -1,6 +1,6 @@
-import type { Request, Response } from 'express';
-import { cloudinary } from '../../../config/cloudinary.js';
-import { PrismaClient } from '@prisma/client';
+import type { Request, Response } from "express";
+import { cloudinary } from "../../../config/cloudinary.js";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -10,14 +10,14 @@ export class UploadAvatarController {
       const { id: userId } = request.user;
 
       if (!request.file) {
-        return response.status(400).json({ error: 'No file uploaded.' });
+        return response.status(400).json({ error: "No file uploaded." });
       }
 
-      const b64 = Buffer.from(request.file.buffer).toString('base64');
-      const dataURI = 'data:' + request.file.mimetype + ';base64,' + b64;
+      const b64 = Buffer.from(request.file.buffer).toString("base64");
+      const dataURI = "data:" + request.file.mimetype + ";base64," + b64;
 
       const result = await cloudinary.uploader.upload(dataURI, {
-        folder: 'gamelog_avatars', 
+        folder: "gamelog_avatars",
         public_id: userId,
         overwrite: true,
       });
@@ -34,7 +34,7 @@ export class UploadAvatarController {
       return response.status(200).json(userWithoutPassword);
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ error: 'Internal server error.' });
+      return response.status(500).json({ error: "Internal server error." });
     }
   }
 }
