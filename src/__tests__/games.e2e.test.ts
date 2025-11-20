@@ -3,9 +3,7 @@ import request from 'supertest';
 import app from '../server.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '../prisma/client.js';
 
 let adminToken = '';
 let userToken = '';

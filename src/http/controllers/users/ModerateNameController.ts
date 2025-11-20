@@ -1,7 +1,5 @@
 import type { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '../../../prisma/client.js';
 
 export class ModerateNameController {
   async handle(request: Request, response: Response) {

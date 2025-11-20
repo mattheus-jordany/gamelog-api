@@ -1,8 +1,6 @@
 import type { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../../../prisma/client.js';
 import { error } from 'console';
-
-const prisma = new PrismaClient();
 
 export class UpdateUserGameLogController {
   async handle(request: Request, response: Response) {
