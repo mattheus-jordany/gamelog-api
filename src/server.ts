@@ -16,8 +16,11 @@ app.get('/', (request, response) => {
   return response.json({ message: 'GameLog API is running!' });
 });
  
-const PORT = process.env.PORT;
+export default app;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor esta rodando na porta ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  const PORT = process.env.PORT ? Number(process.env.PORT) : 8080;
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor esta rodando na porta ${PORT}`);
+  });
+};

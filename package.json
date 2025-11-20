@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon --watch src --exec \"npm run build && node dist/server.js\" -e ts"
+    "dev": "nodemon --watch src --exec \"npm run build && node dist/server.js\" -e ts",
+    "test": "vitest run" 
   },
   "keywords": [],
   "author": "",
@@ -27,9 +28,13 @@
     "@types/multer": "^2.0.0",
     "@types/node": "^24.7.2",
     "@types/nodemailer": "^7.0.4",
+    "@types/supertest": "^6.0.3",
     "nodemon": "^3.1.10",
     "prisma": "^6.17.1",
+    "supertest": "^7.1.4",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
   }
 }

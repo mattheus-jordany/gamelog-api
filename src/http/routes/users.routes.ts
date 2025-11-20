@@ -20,9 +20,13 @@ const moderateNameController = new ModerateNameController();
 const unblockUserNameController = new UnblockUserNameController();
 
 usersRoutes.post('/', createUserController.handle);
+
 usersRoutes.get('/', ensureAuthenticated, ensureAdmin, listUsersController.handle);
+
 usersRoutes.delete('/:id', ensureAuthenticated, ensureAdmin, deleteUserController.handle);
+
 usersRoutes.patch('/:id/moderate-name', ensureAuthenticated, ensureAdmin, moderateNameController.handle);
+
 usersRoutes.patch('/:id/unblock-name', ensureAuthenticated, ensureAdmin, unblockUserNameController.handle);
 
 export { usersRoutes };
