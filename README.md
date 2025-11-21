@@ -9,7 +9,7 @@ A arquitetura segue o padrão RESTful, utilizando TypeScript para segurança de 
 ## 🔗 Links Úteis
 
 * **Documentação Interativa da API (Swagger UI):** `http://localhost:8080/api-docs`
-* **Vídeo de Apresentação:** [LINK DO VÍDEO]
+* **Vídeo de Apresentação:** [[LINK DO VÍDEO](https://drive.google.com/file/d/1PWNMH9wi7w3tJTWKoKoDeWU2FLaHWtg0/view?usp=sharing)]
 
 ## 🛠️ Stack Tecnológica
 
@@ -40,7 +40,7 @@ Você precisa ter instalado em sua máquina:
 1.  **Clone o Repositório:**
 
     ```bash
-    git clone [LINK_DO_SEU_REPOSITORIO]
+    git clone [git@github.com:mattheus-jordany/gamelog-api.git]
     cd gamelog-api
     ```
 
