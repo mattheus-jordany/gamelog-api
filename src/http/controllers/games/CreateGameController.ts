@@ -1,7 +1,5 @@
-import type { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import type { Request, Response } from "express";
+import { prisma } from "../../../prisma/client.js";
 
 export class CreateGameController {
   async handle(request: Request, response: Response) {
@@ -13,7 +11,9 @@ export class CreateGameController {
       });
 
       if (gameAlreadyExists) {
-        return response.status(409).json({ error: 'A game with this title already exists.' });
+        return response
+          .status(409)
+          .json({ error: "A game with this title already exists." });
       }
 
       const game = await prisma.game.create({
@@ -28,7 +28,7 @@ export class CreateGameController {
       return response.status(201).json(game);
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ error: 'Internal server error.' });
+      return response.status(500).json({ error: "Internal server error." });
     }
   }
 }

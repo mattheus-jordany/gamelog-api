@@ -1,13 +1,13 @@
-import { Router } from 'express';
-import { CreateGameController } from '../controllers/games/CreateGameController.js';
-import { ListGamesController } from '../controllers/games/ListGamesController.js';
-import { GetGameByIdController } from '../controllers/games/GetGameByIdController.js';
-import { UpdateGameController } from '../controllers/games/UpdateGameController.js';
-import { DeleteGameController } from '../controllers/games/DeleteGameController.js';
-import { UploadGameCoverController } from '../controllers/games/UploadGameCoverController.js';
-import { ensureAuthenticated } from '../middlewares/ensureAuthenticated.js';
-import { ensureAdmin } from '../middlewares/ensureAdmin.js';
-import { upload } from '../../config/multer.js';
+import { Router } from "express";
+import { CreateGameController } from "../controllers/games/CreateGameController.js";
+import { ListGamesController } from "../controllers/games/ListGamesController.js";
+import { GetGameByIdController } from "../controllers/games/GetGameByIdController.js";
+import { UpdateGameController } from "../controllers/games/UpdateGameController.js";
+import { DeleteGameController } from "../controllers/games/DeleteGameController.js";
+import { UploadGameCoverController } from "../controllers/games/UploadGameCoverController.js";
+import { ensureAuthenticated } from "../middlewares/ensureAuthenticated.js";
+import { ensureAdmin } from "../middlewares/ensureAdmin.js";
+import { upload } from "../../config/multer.js";
 
 const gamesRoutes = Router();
 const createGameController = new CreateGameController();
@@ -61,6 +61,10 @@ const uploadGameCoverController = new UploadGameCoverController();
  *     responses:
  *       201:
  *         description: Sucesso (jogo criado)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
  *       400:
  *         description: Requisição inválida — campos inválidos ou ausentes
  *       401:
@@ -91,11 +95,27 @@ const uploadGameCoverController = new UploadGameCoverController();
  *     responses:
  *       200:
  *         description: Lista de jogos retornada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Game'
+ *                 meta:
+ *                   type: object
  *       500:
  *         description: Erro interno do servidor
  */
-gamesRoutes.post('/', ensureAuthenticated, ensureAdmin, createGameController.handle);
-gamesRoutes.get('/', listGamesController.handle);
+gamesRoutes.post(
+  "/",
+  ensureAuthenticated,
+  ensureAdmin,
+  createGameController.handle
+);
+gamesRoutes.get("/", listGamesController.handle);
 
 /**
  * @swagger
@@ -115,6 +135,10 @@ gamesRoutes.get('/', listGamesController.handle);
  *     responses:
  *       200:
  *         description: Jogo retornado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
  *       400:
  *         description: ID do jogo não enviado ou inválido
  *       404:
@@ -122,7 +146,7 @@ gamesRoutes.get('/', listGamesController.handle);
  *       500:
  *         description: Erro interno do servidor
  */
-gamesRoutes.get('/:id', getGameByIdController.handle);
+gamesRoutes.get("/:id", getGameByIdController.handle);
 
 /**
  * @swagger
@@ -165,6 +189,10 @@ gamesRoutes.get('/:id', getGameByIdController.handle);
  *     responses:
  *       200:
  *         description: Jogo atualizado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
  *       400:
  *         description: Requisição inválida — ID ou dados inválidos
  *       403:
@@ -174,7 +202,12 @@ gamesRoutes.get('/:id', getGameByIdController.handle);
  *       500:
  *         description: Erro interno do servidor
  */
-gamesRoutes.put('/:id', ensureAuthenticated, ensureAdmin, updateGameController.handle);
+gamesRoutes.put(
+  "/:id",
+  ensureAuthenticated,
+  ensureAdmin,
+  updateGameController.handle
+);
 
 /**
  * @swagger
@@ -204,7 +237,12 @@ gamesRoutes.put('/:id', ensureAuthenticated, ensureAdmin, updateGameController.h
  *       500:
  *         description: Erro interno do servidor
  */
-gamesRoutes.delete('/:id', ensureAuthenticated, ensureAdmin, deleteGameController.handle);
+gamesRoutes.delete(
+  "/:id",
+  ensureAuthenticated,
+  ensureAdmin,
+  deleteGameController.handle
+);
 
 /**
  * @swagger
@@ -238,6 +276,10 @@ gamesRoutes.delete('/:id', ensureAuthenticated, ensureAdmin, deleteGameControlle
  *     responses:
  *       200:
  *         description: Capa atualizada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Game'
  *       400:
  *         description: Nenhum arquivo enviado ou Game ID inválido/inexistente
  *       403:
@@ -247,6 +289,12 @@ gamesRoutes.delete('/:id', ensureAuthenticated, ensureAdmin, deleteGameControlle
  *       500:
  *         description: Erro interno do servidor
  */
-gamesRoutes.patch('/:id/cover', ensureAuthenticated, ensureAdmin, upload.single('cover'), uploadGameCoverController.handle);
+gamesRoutes.patch(
+  "/:id/cover",
+  ensureAuthenticated,
+  ensureAdmin,
+  upload.single("cover"),
+  uploadGameCoverController.handle
+);
 
 export { gamesRoutes };
