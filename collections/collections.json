@@ -1,0 +1,233 @@
+{
+  "type": "collection.insomnia.rest/5.0",
+  "name": "GameLogAPI",
+  "meta": {
+    "id": "wrk_gamelog_final",
+    "created": 1760421576224,
+    "modified": 1763922490071
+  },
+  "collection": [
+    {
+      "url": "http://localhost:8080/users",
+      "name": "POST /users (Criar Usuário)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"usuario_padrao\",\n  \"email\": \"user@teste.com\",\n  \"password\": \"SenhaForte123\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "url": "http://localhost:8080/auth/sessions",
+      "name": "POST /auth/sessions (Login)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@teste.com\",\n  \"password\": \"SenhaForteAdmin123\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "url": "http://localhost:8080/auth/profile",
+      "name": "GET /auth/profile (Ver Meu Perfil)",
+      "method": "GET",
+      "headers": [],
+      "authentication": { "type": "bearer", "token": "COLE_SEU_TOKEN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/auth/profile",
+      "name": "PUT /auth/profile (Atualizar Meu Perfil)",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"NovoNomeUsuario\",\n  \"avatarUrl\": \"https://exemplo.com/foto.png\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "authentication": { "type": "bearer", "token": "COLE_SEU_TOKEN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/auth/profile",
+      "name": "DELETE /auth/profile (Deletar Minha Conta)",
+      "method": "DELETE",
+      "headers": [],
+      "authentication": { "type": "bearer", "token": "COLE_SEU_TOKEN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/auth/profile/avatar",
+      "name": "PATCH /auth/profile/avatar (Upload Avatar)",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "multipart/form-data",
+        "params": [
+          { "name": "avatar", "type": "file" }
+        ]
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "multipart/form-data" }
+      ],
+      "authentication": { "type": "bearer", "token": "COLE_SEU_TOKEN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/auth/forgot-password",
+      "name": "POST /auth/forgot-password (Recuperar Senha)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"user@teste.com\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "url": "http://localhost:8080/auth/reset-password",
+      "name": "POST /auth/reset-password (Resetar Senha)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"token\": \"COLE_O_TOKEN_DO_EMAIL\",\n  \"password\": \"NovaSenha123\",\n  \"password_confirmation\": \"NovaSenha123\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "url": "http://localhost:8080/games",
+      "name": "POST /games (Criar Jogo - Admin)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Elden Ring\",\n  \"platform\": \"PC\",\n  \"genre\": [\"RPG\", \"Action\"],\n  \"releaseYear\": 2022\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "authentication": { "type": "bearer", "token": "COLE_TOKEN_ADMIN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/games",
+      "name": "GET /games (Listar Jogos)",
+      "method": "GET",
+      "parameters": [
+        { "name": "page", "value": "1" },
+        { "name": "limit", "value": "10" }
+      ],
+      "headers": []
+    },
+    {
+      "url": "http://localhost:8080/games/ID_DO_JOGO",
+      "name": "GET /games/:id (Detalhar Jogo)",
+      "method": "GET",
+      "headers": []
+    },
+    {
+      "url": "http://localhost:8080/games/ID_DO_JOGO",
+      "name": "PUT /games/:id (Atualizar Jogo - Admin)",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"title\": \"Elden Ring GOTY\",\n  \"platform\": \"PC\",\n  \"genre\": [\"RPG\"],\n  \"releaseYear\": 2022\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "authentication": { "type": "bearer", "token": "COLE_TOKEN_ADMIN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/games/ID_DO_JOGO",
+      "name": "DELETE /games/:id (Deletar Jogo - Admin)",
+      "method": "DELETE",
+      "headers": [],
+      "authentication": { "type": "bearer", "token": "COLE_TOKEN_ADMIN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/games/ID_DO_JOGO/cover",
+      "name": "PATCH /games/:id/cover (Upload Capa - Admin)",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "multipart/form-data",
+        "params": [
+          { "name": "cover", "type": "file" }
+        ]
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "multipart/form-data" }
+      ],
+      "authentication": { "type": "bearer", "token": "COLE_TOKEN_ADMIN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/logs",
+      "name": "POST /logs (Criar Log)",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"gameId\": \"ID_DO_JOGO\",\n  \"status\": \"PLAYING\",\n  \"rating\": 10,\n  \"comment\": \"Jogão!\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "authentication": { "type": "bearer", "token": "COLE_SEU_TOKEN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/logs/my",
+      "name": "GET /logs/my (Meus Logs)",
+      "method": "GET",
+      "headers": [],
+      "authentication": { "type": "bearer", "token": "COLE_SEU_TOKEN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/logs/ID_DO_LOG",
+      "name": "PUT /logs/:id (Atualizar Log)",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"COMPLETED\",\n  \"rating\": 10\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "authentication": { "type": "bearer", "token": "COLE_SEU_TOKEN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/logs/ID_DO_LOG",
+      "name": "DELETE /logs/:id (Deletar Log)",
+      "method": "DELETE",
+      "headers": [],
+      "authentication": { "type": "bearer", "token": "COLE_SEU_TOKEN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/users",
+      "name": "GET /users (Listar Usuários - Admin)",
+      "method": "GET",
+      "headers": [],
+      "authentication": { "type": "bearer", "token": "COLE_TOKEN_ADMIN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/users/ID_DO_USUARIO",
+      "name": "DELETE /users/:id (Deletar Usuário - Admin)",
+      "method": "DELETE",
+      "headers": [],
+      "authentication": { "type": "bearer", "token": "COLE_TOKEN_ADMIN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/users/ID_DO_USUARIO/moderate-name",
+      "name": "PATCH /users/:id/moderate-name (Moderar Nome - Admin)",
+      "method": "PATCH",
+      "headers": [],
+      "authentication": { "type": "bearer", "token": "COLE_TOKEN_ADMIN_AQUI" }
+    },
+    {
+      "url": "http://localhost:8080/users/ID_DO_USUARIO/unblock-name",
+      "name": "PATCH /users/:id/unblock-name (Desbloquear Nome - Admin)",
+      "method": "PATCH",
+      "headers": [],
+      "authentication": { "type": "bearer", "token": "COLE_TOKEN_ADMIN_AQUI" }
+    }
+  ]
+}
